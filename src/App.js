@@ -1,4 +1,4 @@
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
 import returnDice from './diceResults';
 
@@ -33,17 +33,17 @@ function App() {
     window.location.reload();
   };
 
+  const [showStory, setShowStory] = useState(false);
+
+  const generateStory = () => {
+    setShowStory(true);
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        {/* <p>
-          { resultDiceOne }, 
-          { resultDiceTwo }, 
-          { resultDiceThree }, 
-          { resultDiceFour }, 
-          { resultDiceFive }, 
-          { resultDiceSix }
-        </p> */}
+        <button onClick={reloadPage}>Reroll</button>
+
         <div class="DiceContainer">
           <img src={imgDiceOne} alt={resultDiceOne} class="Dice"/>
           <img src={imgDiceTwo} alt={resultDiceTwo} class="Dice"/>
@@ -53,7 +53,13 @@ function App() {
           <img src={imgDiceSix} alt={resultDiceSix} class="Dice"/>
         </div>
 
-        <button onClick={reloadPage}>Reroll</button>
+        <button onClick={generateStory}>Generate Story</button>
+        {showStory && (
+          <p>
+            Generate a short, 100-word story using the following items: 
+            {resultDiceOne}, {resultDiceTwo}, {resultDiceThree}, {resultDiceFour}, {resultDiceFive}, {resultDiceSix}
+          </p>
+        )}
       </header>
     </div>
   );
