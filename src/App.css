@@ -49,6 +49,7 @@ body {
   background-image: url('../public/type.png');
   background-size: cover;
   background-position: top;
+  overflow: hidden;
 }
 
 .storyContainer {
