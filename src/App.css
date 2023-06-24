@@ -1,22 +1,20 @@
-.App {
-  text-align: center;
-}
+@import url('https://fonts.googleapis.com/css2?family=Indie+Flower&display=swap');
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+App {
+  text-align: center;
+  
 }
 
 .App-header {
-  background-color: #999;
   min-height: 100vh;
+  min-width: 50vw;
+  padding-top: 5%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  justify-content: flex-start; 
+  color: #333;
+  transform: rotate(2.5deg);
 }
 
 .App-link {
@@ -31,6 +29,52 @@
 
 .DiceContainer {
   display: flex;
+  justify-content: center; 
+  align-items: flex-start; 
+}
+
+.buttonContainer {
+  display: flex;
   justify-content: center;
-  align-items: center;
+}
+
+.buttonContainer .button {
+  margin: 0 10px;
+}
+
+body {
+  color: #999;
+  font-size: 20px;
+  font-family: 'Indie Flower', cursive;
+  background-image: url('../public/type.png');
+  background-size: cover;
+  background-position: top;
+}
+
+.storyContainer {
+  justify-content: center;
+  width: 50%;
+}
+
+.button {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  background-color: #777;
+  color: #fff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.button:hover {
+  background-color: #555;
+}
+
+.button:active {
+  background-color: #333;
 }

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import returnDice from './diceResults';
+import GptApp from './gptApp';
 
 const diceFacesOne = ["Kiss", "Flower", "Clock", "Caravan", "Whale", "Drink"]
 const resultDiceOne = returnDice(diceFacesOne);
@@ -10,7 +11,7 @@ const diceFacesTwo = ["Burger", "Explosion", "Hat", "Car", "Ladder", "Tree"]
 const resultDiceTwo = returnDice(diceFacesTwo);
 const imgDiceTwo = `Dice/2/${resultDiceTwo}.png`;
 
-const diceFacesThree = ["Rain", "Poo", "Sun", "Love", "Football", "Glasses"]
+const diceFacesThree = ["Rain", "Sun", "Love", "Football", "Glasses"]
 const resultDiceThree = returnDice(diceFacesThree);
 const imgDiceThree = `Dice/3/${resultDiceThree}.png`;
 
@@ -33,32 +34,48 @@ function App() {
     window.location.reload();
   };
 
-  const [showStory, setShowStory] = useState(false);
+  const [generatedText, setGeneratedText] = useState('');
+  const [loading, setLoading] = useState(false);
+  const gpt = new GptApp();
 
-  const generateStory = () => {
-    setShowStory(true);
+  const generateStory = async () => {
+    const textToSend = `Generate a short, 100 word story using the following items: 
+      ${resultDiceOne}, ${resultDiceTwo}, ${resultDiceThree}, ${resultDiceFour}, ${resultDiceFive}, ${resultDiceSix}`;
+
+    setLoading(true); 
+
+    try {
+      const response = await gpt.chat(textToSend);
+      console.log(response);
+      setGeneratedText(response);
+    } catch (error) {
+      console.error(error);
+    }
+
+    setLoading(false);
   };
 
   return (
     <div className="App">
       <header className="App-header">
-        <button onClick={reloadPage}>Reroll</button>
-
-        <div class="DiceContainer">
-          <img src={imgDiceOne} alt={resultDiceOne} class="Dice"/>
-          <img src={imgDiceTwo} alt={resultDiceTwo} class="Dice"/>
-          <img src={imgDiceThree} alt={resultDiceThree} class="Dice"/>
-          <img src={imgDiceFour} alt={resultDiceFour} class="Dice"/>
-          <img src={imgDiceFive} alt={resultDiceFive} class="Dice"/>
-          <img src={imgDiceSix} alt={resultDiceSix} class="Dice"/>
+      <h2>Storyteller Dice</h2>
+        
+        <div className="DiceContainer">
+          <img src={imgDiceOne} alt={resultDiceOne} className="Dice"/>
+          <img src={imgDiceTwo} alt={resultDiceTwo} className="Dice"/>
+          <img src={imgDiceThree} alt={resultDiceThree} className="Dice"/>
+          <img src={imgDiceFour} alt={resultDiceFour} className="Dice"/>
+          <img src={imgDiceFive} alt={resultDiceFive} className="Dice"/>
+          <img src={imgDiceSix} alt={resultDiceSix} className="Dice"/>
         </div>
-
-        <button onClick={generateStory}>Generate Story</button>
-        {showStory && (
-          <p>
-            Generate a short, 100-word story using the following items: 
-            {resultDiceOne}, {resultDiceTwo}, {resultDiceThree}, {resultDiceFour}, {resultDiceFive}, {resultDiceSix}
-          </p>
+        <div className='buttonContainer'>
+        <button onClick={reloadPage} className='button'>Reroll</button>
+        <button onClick={generateStory} className='button'>Generate Story</button>
+        </div>
+        {loading ? (
+          <p>Loading...</p>
+        ) : (
+          generatedText && <div className="storyContainer"><p>{generatedText}</p></div>
         )}
       </header>
     </div>
